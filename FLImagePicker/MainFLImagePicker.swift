@@ -2,8 +2,29 @@
 //  MainFLImagePicker.swift
 //  FLImagePicker
 //
-//  Created by Lee Yen Lin on 2021/12/23.
+//  Created by Allen Lee on 2021/12/23.
 //
+//  MIT License
+//
+//  Copyright (c) 2021 Allen Lee
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
 
 import UIKit
 import Photos
@@ -20,6 +41,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     
     // picker data
     var imagePickerDelegate: FLImagePickerDelegate?
+    var imagePickerStyle: FLImagePickerStyle?
     private var numsOfRow: CGFloat = 3 // cells of row
     private var maxPick = 100
     private var fspd: CGFloat = 3 // step of pixel
@@ -358,11 +380,17 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let asset = assetResult[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FLImgCell", for: indexPath) as! MainFLImagePickerCell
         
-        let asset = assetResult[indexPath.row]
+        // set default style
+        cell.imgChecked.image = imagePickerStyle?.imgChecked
+        cell.checkBorderColor = imagePickerStyle?.checkBorderColor
+        cell.checkBackgroundColor = imagePickerStyle?.checkBackgroundColor
+        
+        // set data
         cell.imgAsset = asset
-        cell.setSelected(isSelect: mainCV.indexPathsForSelectedItems?.contains(indexPath) ?? false)
+        cell.isSelected = mainCV.indexPathsForSelectedItems?.contains(indexPath) ?? false
         return cell
     }
 }

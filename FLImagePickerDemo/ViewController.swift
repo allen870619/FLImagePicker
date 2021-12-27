@@ -28,12 +28,20 @@ class ViewController: UIViewController, FLImagePickerDelegate {
         let vc = FLImagePicker()
         vc.imageDelegate = self
         
-        // optional settings
-        vc.maxPick = 100
-        vc.fps = 120
-        vc.detectAreaHeight = 240
-        vc.numsOfRow = 3
-        vc.ppm = 3
+//        // style
+//        var style = FLImagePickerStyle()
+//        style.checkBorderColor = .red
+//        style.checkBackgroundColor = .orange
+//        style.imgChecked = UIImage(named: "test")
+//        style.checkBorderColor = nil
+//        vc.style = style
+//        
+//        // optional settings
+//        vc.maxPick = 100
+//        vc.fps = 120
+//        vc.detectAreaHeight = 240
+//        vc.numsOfRow = 3
+//        vc.ppm = 5
         self.present(vc, animated: true, completion: nil)
     }
 }

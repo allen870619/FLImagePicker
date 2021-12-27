@@ -2,8 +2,29 @@
 //  MainFLImagePickerCell.swift
 //  FLImagePicker
 //
-//  Created by Lee Yen Lin on 2021/12/23.
+//  Created by Allen Lee on 2021/12/23.
 //
+//  MIT License
+//
+//  Copyright (c) 2021 Allen Lee
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
 
 import UIKit
 import Photos
@@ -14,17 +35,19 @@ class MainFLImagePickerCell: UICollectionViewCell {
     @IBOutlet weak var checkHinter: UIView!
     @IBOutlet weak var imgChecked: UIImageView!
     
-    let selectedColor = UIColor.init(red: 51/255, green: 120/255, blue: 246/255, alpha: 1)
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        let imagePath = Bundle(for: MainFLImagePickerCell.self).path(forResource: "done_white_24dp", ofType: "png")
-        if let imagePath = imagePath {
-            imgChecked.image = UIImage(contentsOfFile: imagePath)
+    /* checked border*/
+    var checkBackgroundColor: UIColor?
+    var checkBorderColor: UIColor?{
+        willSet(color){
+            if let color = color {
+                checkHinter.layer.borderColor = color.cgColor
+            }else{
+                checkHinter.layer.borderColor = UIColor.white.withAlphaComponent(0.75).cgColor
+            }
         }
     }
     
+    /* set photo*/
     var imgAsset: PHAsset?{
         didSet{
             if let imgAsset = imgAsset {
@@ -33,33 +56,17 @@ class MainFLImagePickerCell: UICollectionViewCell {
                                                         contentMode: .aspectFit,
                                                         options: .none){[self] (image, info) in
                     photoImageView.image = image
-                    photoImageView.contentMode = .scaleAspectFill
                 }
             }
         }
     }
     
-    func setSelected(isSelect: Bool){
-        cover.isHidden = !isSelect
-        imgChecked.isHidden = !isSelect
-        if isSelect{
-            checkHinter.backgroundColor = selectedColor
-        }else{
-            checkHinter.backgroundColor = .clear
-        }
-        checkHinter.layer.borderColor = UIColor.white.withAlphaComponent(0.75).cgColor
-    }
-    
+    /* selected*/
     override var isSelected: Bool{
         didSet{
             cover.isHidden = !isSelected
             imgChecked.isHidden = !isSelected
-            if isSelected{
-                checkHinter.backgroundColor = selectedColor
-                
-            }else{
-                checkHinter.backgroundColor = .clear
-            }
+            checkHinter.backgroundColor = isSelected ? checkBackgroundColor : .clear
         }
     }
 }
