@@ -68,7 +68,7 @@ Pod::Spec.new do |spec|
   spec.platform     = :ios, "13.0"
 
   #  When using multiple platforms
-  spec.ios.deployment_target = "13.0"
+  # spec.ios.deployment_target = "13.0"
   # spec.osx.deployment_target = "10.7"
   # spec.watchos.deployment_target = "2.0"
   # spec.tvos.deployment_target = "9.0"
@@ -92,7 +92,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.source_files  = ['FLImagePicker/*.swift', 'FLImagePicker/*.xib']
-  spec.public_header_files = "FLImagePicker/FLImagePicker.h"
+  #  spec.public_header_files = "FLImagePicker/FLImagePicker.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -130,5 +130,6 @@ Pod::Spec.new do |spec|
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
+  spec.swift_version = "5.0"
 
 end
