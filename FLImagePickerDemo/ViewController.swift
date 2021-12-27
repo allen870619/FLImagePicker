@@ -27,10 +27,12 @@ class ViewController: UIViewController, FLImagePickerDelegate {
     @objc func btnPressed(_ sender: Any){
         let vc = FLImagePicker()
         vc.imageDelegate = self
+        
+        // optional settings
         vc.maxPick = 100
         vc.fps = 120
         vc.detectAreaHeight = 240
-        vc.numsOfRow = 5
+        vc.numsOfRow = 3
         vc.ppm = 3
         self.present(vc, animated: true, completion: nil)
     }
