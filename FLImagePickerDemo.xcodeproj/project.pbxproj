@@ -24,6 +24,9 @@
 		9F3ECE472775514600253E7C /* MainFLImagePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3ECE422775514600253E7C /* MainFLImagePicker.xib */; };
 		9F3ECE4F2775568700253E7C /* done_white_24dp.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F3ECE4E2775568700253E7C /* done_white_24dp.png */; };
 		9FBBFFA827795C230076658D /* assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FBBFFA727795C230076658D /* assets.xcassets */; };
+		9FD1DABA277A9C2400EADDCE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9FD1DABC277A9C2400EADDCE /* Localizable.strings */; };
+		9FD1DAC1277AAB7400EADDCE /* FLImagePickerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD1DAC0277AAB7400EADDCE /* FLImagePickerStyle.swift */; };
+		9FD1DAC3277AABA400EADDCE /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD1DAC2277AABA400EADDCE /* MainProtocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +72,12 @@
 		9F3ECE422775514600253E7C /* MainFLImagePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainFLImagePicker.xib; sourceTree = "<group>"; };
 		9F3ECE4E2775568700253E7C /* done_white_24dp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done_white_24dp.png; sourceTree = "<group>"; };
 		9FBBFFA727795C230076658D /* assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = assets.xcassets; sourceTree = "<group>"; };
+		9FD1DABB277A9C2400EADDCE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9FD1DABD277A9C5D00EADDCE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
+		9FD1DABE277A9C5D00EADDCE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		9FD1DABF277A9C5D00EADDCE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		9FD1DAC0277AAB7400EADDCE /* FLImagePickerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLImagePickerStyle.swift; sourceTree = "<group>"; };
+		9FD1DAC2277AABA400EADDCE /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +127,7 @@
 				9F3ECE16277550BC00253E7C /* Assets.xcassets */,
 				9F3ECE18277550BC00253E7C /* LaunchScreen.storyboard */,
 				9F3ECE1B277550BC00253E7C /* Info.plist */,
+				9FD1DABC277A9C2400EADDCE /* Localizable.strings */,
 			);
 			path = FLImagePickerDemo;
 			sourceTree = "<group>";
@@ -126,7 +136,9 @@
 			isa = PBXGroup;
 			children = (
 				9F3ECE28277550ED00253E7C /* FLImagePicker.h */,
+				9FD1DAC2277AABA400EADDCE /* MainProtocols.swift */,
 				9F3ECE412775514600253E7C /* FLImagePicker.swift */,
+				9FD1DAC0277AAB7400EADDCE /* FLImagePickerStyle.swift */,
 				9F3ECE3F2775514500253E7C /* MainFLImagePicker.swift */,
 				9F3ECE422775514600253E7C /* MainFLImagePicker.xib */,
 				9F3ECE3E2775514500253E7C /* MainFLImagePickerCell.swift */,
@@ -222,6 +234,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hant",
 			);
 			mainGroup = 9F3ECE01277550BA00253E7C;
 			productRefGroup = 9F3ECE0B277550BA00253E7C /* Products */;
@@ -240,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F3ECE1A277550BC00253E7C /* LaunchScreen.storyboard in Resources */,
+				9FD1DABA277A9C2400EADDCE /* Localizable.strings in Resources */,
 				9F3ECE17277550BC00253E7C /* Assets.xcassets in Resources */,
 				9F3ECE15277550BA00253E7C /* Main.storyboard in Resources */,
 			);
@@ -273,7 +287,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FD1DAC1277AAB7400EADDCE /* FLImagePickerStyle.swift in Sources */,
 				9F3ECE432775514600253E7C /* MainFLImagePickerCell.swift in Sources */,
+				9FD1DAC3277AABA400EADDCE /* MainProtocols.swift in Sources */,
 				9F3ECE462775514600253E7C /* FLImagePicker.swift in Sources */,
 				9F3ECE2A277550ED00253E7C /* FLImagePicker.docc in Sources */,
 				9F3ECE442775514600253E7C /* MainFLImagePicker.swift in Sources */,
@@ -295,6 +311,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				9F3ECE14277550BA00253E7C /* Base */,
+				9FD1DABD277A9C5D00EADDCE /* zh-Hant */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -303,8 +320,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				9F3ECE19277550BC00253E7C /* Base */,
+				9FD1DABE277A9C5D00EADDCE /* zh-Hant */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		9FD1DABC277A9C2400EADDCE /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9FD1DABB277A9C2400EADDCE /* en */,
+				9FD1DABF277A9C5D00EADDCE /* zh-Hant */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -314,6 +341,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -375,6 +403,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

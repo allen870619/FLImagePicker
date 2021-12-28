@@ -38,7 +38,7 @@ public class FLImagePicker: UINavigationController {
         }
     }
     
-    // delegate
+    /* delegate*/
     public var imageDelegate: FLImagePickerDelegate?{
         set(delegate){
             picker.imagePickerDelegate = delegate
@@ -49,10 +49,14 @@ public class FLImagePicker: UINavigationController {
     }
     
     /* style*/
-    public var style: FLImagePickerStyle{
+    public var style: FLImagePickerStyle?{
         set(v){
-            pickerStyle = v
-            picker.imagePickerStyle =  v
+            if let v = v{
+                pickerStyle = v
+            }else{
+                pickerStyle = FLImagePickerStyle()
+            }
+            picker.imagePickerStyle = pickerStyle
         }
         get{
             return pickerStyle
@@ -130,11 +134,19 @@ public class FLImagePicker: UINavigationController {
         }
     }
     
+    /* data*/
+    var selectedAsset: [PHAsset]{
+        get{
+            return picker.getSelectedAssets()
+        }
+    }
+    
     /* initialize*/
     public init(){
         super.init(nibName: nil, bundle: nil)
         viewControllers.append(picker)
         picker.imagePickerStyle = pickerStyle
+        picker.imagePicker = self
     }
     
     required init?(coder: NSCoder) {
@@ -147,25 +159,12 @@ internal struct FLImagePickerOptions{
     var maxPick = 100
     var ppm: CGFloat = 3 // (pps, pixel per step)
     var fps: CGFloat = 120 // update speed
-    var detectAreaHeight: CGFloat = 240
+    var detectAreaHeight: CGFloat = 200
     
     // default
     let defNumOfRow = CGFloat(3)
     let defMaxPick = 100
     let defPpm = CGFloat(3)
     let defFps = CGFloat(120)
-    let defDetectAreaHeight = CGFloat(240)
-}
-
-public struct FLImagePickerStyle{
-    // cell style
-    public var imgChecked: UIImage? = UIImage(contentsOfFile: Bundle(for: FLImagePicker.self).path(forResource: "done_white_24dp", ofType: "png") ?? "")
-    public var checkBorderColor: UIColor? = UIColor.white.withAlphaComponent(0.75)
-    public var checkBackgroundColor: UIColor? = UIColor(named: "AccentColor")
-    
-    public init(){}
-}
-
-public protocol FLImagePickerDelegate{
-    func didFinished(_ imageAssets: [PHAsset])
+    let defDetectAreaHeight = CGFloat(200)
 }

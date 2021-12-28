@@ -30,20 +30,33 @@ import UIKit
 import Photos
 
 class MainFLImagePickerCell: UICollectionViewCell {
-    @IBOutlet weak var cover: UIView!
-    @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var checkHinter: UIView!
-    @IBOutlet weak var imgChecked: UIImageView!
+    @IBOutlet private weak var cover: UIView!
+    @IBOutlet private weak var photoImageView: UIImageView!
+    @IBOutlet private weak var checkHinter: UIView!
+    @IBOutlet private weak var imgChecked: UIImageView!
     
     /* checked border*/
-    var checkBackgroundColor: UIColor?
+    var checkBackgroundColor: UIColor?{
+        willSet{
+            checkHinter.backgroundColor = isSelected ? newValue : .clear
+        }
+    }
+    
     var checkBorderColor: UIColor?{
-        willSet(color){
-            if let color = color {
-                checkHinter.layer.borderColor = color.cgColor
-            }else{
-                checkHinter.layer.borderColor = UIColor.white.withAlphaComponent(0.75).cgColor
-            }
+        willSet{
+            checkHinter.layer.borderColor = newValue?.cgColor
+        }
+    }
+    
+    var checkImage: UIImage?{
+        willSet{
+            imgChecked.image = newValue
+        }
+    }
+    
+    var coverColor: UIColor?{
+        willSet{
+            cover.backgroundColor = newValue
         }
     }
     
