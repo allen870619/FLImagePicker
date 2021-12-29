@@ -31,27 +31,22 @@ import UIKit
 public struct FLImagePickerStyle{
     /* cell style*/
     /// check hinter
-    public var checkImage: UIImage? = .FLDefaults.checkImg
-    public var checkBorderColor: UIColor? = .FLDefaults.checkBorderColor{
-        didSet{
-            if checkBorderColor == nil{
-                checkBorderColor = .FLDefaults.checkBorderColor
-            }
-        }
-    }
-    public var checkBackgroundColor: UIColor? = .FLDefaults.primary
+    public var checkBorderColor: UIColor? = FLDefaults.Colors.checkBorderColor
+    public var checkBackgroundColor: UIColor? = FLDefaults.Colors.primary
+    public var checkImage: UIImage? = FLDefaults.Images.checkImg
     
     // cover
-    public var coverColor: UIColor? = .FLDefaults.coverBackground
+    public var coverColor: UIColor? = FLDefaults.Colors.coverBackground
     
     /* button*/
-    public var btnColor: UIColor? = .FLDefaults.primary
+    public var btnColor: UIColor? = FLDefaults.Colors.primary
     
     public init(){}
 }
 
-extension UIColor{
-    public struct FLDefaults{
+public struct FLDefaults{
+    /* colors*/
+    public struct Colors{
         public static var primary: UIColor{
             get{
                 if let color = UIColor(named: "AccentColor"){
@@ -67,10 +62,9 @@ extension UIColor{
         
         public static let checkBorderColor = UIColor.white.withAlphaComponent(0.75)
     }
-}
 
-extension UIImage{
-    public struct FLDefaults{
+    /* images*/
+    public struct Images{
         public static var checkImg: UIImage?{
             get{
                 if let path = Bundle(for: FLImagePicker.self).path(forResource: "done_white_24dp", ofType: "png"){

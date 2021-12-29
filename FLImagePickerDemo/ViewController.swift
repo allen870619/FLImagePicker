@@ -43,29 +43,30 @@ class ViewController: UIViewController, FLImagePickerDelegate {
         vc.imageDelegate = self
         
         //  style
-//        var style = FLImagePickerStyle()
-//        style.checkImage = UIImage(named: "test")
-//        style.checkBorderColor = .red
-//        style.checkBackgroundColor = .brown
-//        style.btnColor = .green
-//        style.coverColor = .green
-//        vc.style = style
-//        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(3)){
-//            style.checkImage = .FLDefaults.checkImg
-//            style.checkBorderColor = .FLDefaults.checkBorderColor
-//            style.checkBackgroundColor = .FLDefaults.primary
-//            style.btnColor = .FLDefaults.primary
-//            style.coverColor = .FLDefaults.coverBackground
-//            vc.style = style
-//        }
+        //        var style = FLImagePickerStyle()
+        //        style.checkImage = UIImage(named: "test")
+        //        style.checkBorderColor = FLDefaults.Colors.checkBorderColor
+        //        style.checkBackgroundColor = .brown
+        //        style.btnColor = .green
+        //        style.coverColor = .green
+        //        vc.style = style
+        
+        //
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(3)){
+        //            style.checkImage = .FLDefaults.checkImg
+        //            style.checkBorderColor = .FLDefaults.checkBorderColor
+        //            style.checkBackgroundColor = .FLDefaults.primary
+        //            style.btnColor = .FLDefaults.primary
+        //            style.coverColor = .FLDefaults.coverBackground
+        //            vc.style = style
+        //        }
         
         // optional settings
-//        vc.maxPick = 10
-//        vc.fps = 120
-//        vc.detectAreaHeight = 200
-//        vc.numsOfRow = 3
-//        vc.ppm = 3
+        //        vc.maxPick = 10
+        //        vc.fps = 120
+        //        vc.detectAreaHeight = 200
+        //        vc.numsOfRow = 3
+        //        vc.ppm = 3
         self.present(vc, animated: true, completion: nil)
     }
 }
