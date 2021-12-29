@@ -171,12 +171,14 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     @objc func onFinish(_ sender: Any) {
         dismiss(animated: true){[self] in
             imagePickerDelegate?.flImagePicker(imagePicker, didFinished: getSelectedAssets())
+            imagePicker = nil
         }
     }
     
     @objc func onCancel(_ sender: Any) {
         dismiss(animated: true){[self] in
             imagePickerDelegate?.flImagePicker(didCancelled: imagePicker)
+            imagePicker = nil
         }
     }
     
