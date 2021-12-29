@@ -35,13 +35,30 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     var btnFinish: UIButton!
     var btnCancel: UIButton!
     
-    // PhotoKit
+    // photoKit
     var assetResult: PHFetchResult<PHAsset> = PHFetchResult()
     let imgCacher = PHCachingImageManager()
     
-    // picker data
+    // link
+    var imagePicker: FLImagePicker!
     var imagePickerDelegate: FLImagePickerDelegate?
-    var imagePickerStyle: FLImagePickerStyle?
+    var imagePickerStyle: FLImagePickerStyle?{
+        didSet{
+            if isViewLoaded{
+                for cell in mainCV.visibleCells{
+                    if let cell = cell as? MainFLImagePickerCell{
+                        setCellStyle(cell, style: imagePickerStyle)
+                    }
+                }
+                
+                // btn
+                btnFinish.setTitleColor(imagePickerStyle?.btnColor ?? .link, for: .normal)
+                btnCancel.setTitleColor(imagePickerStyle?.btnColor ?? .link, for: .normal)
+            }
+        }
+    }
+    
+    // picker data
     private var numsOfRow: CGFloat = 3 // cells of row
     private var maxPick = 100
     private var fspd: CGFloat = 3 // step of pixel
@@ -92,7 +109,8 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         
         btnFinish = UIButton(type: .system)
         btnFinish.frame = CGRect(x: 0, y: 0, width: 120, height: 36)
-        btnFinish.setTitle("完成", for: .normal)
+        btnFinish.setTitle(NSLocalizedString("done", comment: "done"), for: .normal)
+        btnFinish.setTitleColor(imagePickerStyle?.btnColor, for: .normal)
         btnFinish.contentHorizontalAlignment = .right
         btnFinish.addTarget(self, action: #selector(onFinish), for: .touchUpInside)
         let rightCustomView = UIView(frame: CGRect(x: 0, y: 0, width: 120, height: 36))
@@ -102,7 +120,8 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         
         btnCancel = UIButton(type: .system)
         btnCancel.frame = CGRect(x: 0, y: 0, width: 120, height: 36)
-        btnCancel.setTitle("取消", for: .normal)
+        btnCancel.setTitle(NSLocalizedString("cancel", comment: "cancel"), for: .normal)
+        btnCancel.setTitleColor(imagePickerStyle?.btnColor, for: .normal)
         btnCancel.contentHorizontalAlignment = .left
         btnCancel.addTarget(self, action: #selector(onCancel), for: .touchUpInside)
         let leftCustomView = UIView(frame: CGRect(x: 0, y: 0, width: 120, height: 36))
@@ -126,8 +145,8 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         mainCV.allowsSelection = true
         
         // pan
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(cvPan))
-        panGesture.addTarget(self, action: #selector(panWhenScroll))
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panWhenScroll))
+        panGesture.addTarget(self, action: #selector(cvPan))
         let ori = (mainCV.gestureRecognizers?.firstIndex(of: mainCV.panGestureRecognizer)) ?? 0
         mainCV.gestureRecognizers?.insert(panGesture, at: ori)
         
@@ -141,21 +160,24 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         mainCV.addGestureRecognizer(longTapGesture)
     }
     
+    func setCellStyle(_ cell: MainFLImagePickerCell, style: FLImagePickerStyle?){
+        cell.coverColor = style?.coverColor
+        cell.checkImage = style?.checkImage
+        cell.checkBorderColor = style?.checkBorderColor
+        cell.checkBackgroundColor = style?.checkBackgroundColor
+    }
+    
     // outlet
     @objc func onFinish(_ sender: Any) {
-        var result: [PHAsset] = []
-        if let items = mainCV.indexPathsForSelectedItems?.sorted(by: {$0.row < $1.row}){
-            for i in items{
-                result.append(assetResult[i.row])
-            }
-        }
         dismiss(animated: true){[self] in
-            imagePickerDelegate?.didFinished(result)
+            imagePickerDelegate?.flImagePicker(imagePicker, didFinished: getSelectedAssets())
         }
     }
     
     @objc func onCancel(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true){[self] in
+            imagePickerDelegate?.flImagePicker(didCancelled: imagePicker)
+        }
     }
     
     /* data*/
@@ -213,6 +235,16 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         }
     }
     
+    func getSelectedAssets() -> [PHAsset]{
+        var result: [PHAsset] = []
+        if let items = mainCV.indexPathsForSelectedItems?.sorted(by: {$0.row < $1.row}){
+            for i in items{
+                result.append(assetResult[i.row])
+            }
+        }
+        return result
+    }
+    
     // set select item
     func setCellStatus(_ indexPath: IndexPath, status: Bool){
         if status{
@@ -233,7 +265,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         if count > 0 {
             total = "(\(count))"
         }
-        btnFinish.setTitle("完成\(total)", for: .normal)
+        btnFinish.setTitle("\(NSLocalizedString("done", comment: "done"))\(total)", for: .normal)
     }
     
     // auto scoll timer
@@ -282,15 +314,15 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         
         if let startIndexPath = startIndexPath {
             // check need to clear beyond or under indexPath
-            var isOver = false
+            var isCross = false
             for i in thisSelected{
                 if (curIndexPath.row < startIndexPath.row && i.row > startIndexPath.row) ||
                     (curIndexPath.row > startIndexPath.row && i.row < startIndexPath.row) {
-                    isOver = true
+                    isCross = true
                     break
                 }
             }
-            if isOver{
+            if isCross{
                 for i in thisSelected{
                     if i != startIndexPath{
                         setCellStatus(i, status: !multiAction)
@@ -300,6 +332,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
             }
             
             // start pan
+            var hasNew = false
             // go down
             if curIndexPath.row >= startIndexPath.row{ // down
                 for cell in mainCV.visibleCells.sorted(by: {
@@ -310,12 +343,15 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
                         if tIndexPath.row > curIndexPath.row && thisSelected.contains(tIndexPath){
                             setCellStatus(tIndexPath, status: !multiAction)
                             thisSelected.remove(tIndexPath)
+                            hasNew = true
                         }
+                        
                         // pan new
                         if tIndexPath.row >= startIndexPath.row && tIndexPath.row <= curIndexPath.row {
                             if cell.isSelected != multiAction  && !thisSelected.contains(tIndexPath){
                                 setCellStatus(tIndexPath, status: multiAction)
                                 thisSelected.insert(tIndexPath)
+                                hasNew = true
                             }
                         }
                     }
@@ -332,16 +368,30 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
                         if tIndexPath.row < curIndexPath.row && thisSelected.contains(tIndexPath){
                             setCellStatus(tIndexPath, status: !multiAction)
                             thisSelected.remove(tIndexPath)
+                            hasNew = true
                         }
+                        
                         // pan new
                         if tIndexPath.row <= startIndexPath.row && tIndexPath.row >= curIndexPath.row{
                             if cell.isSelected != multiAction && !thisSelected.contains(tIndexPath){
                                 setCellStatus(tIndexPath, status: multiAction)
                                 thisSelected.insert(tIndexPath)
+                                hasNew = true
                             }
                         }
                     }
                 }
+            }
+            
+            // notify delegate if selected cell has change
+            if hasNew && (timer != nil || cvSelCount < maxPick){
+                var selAssets: [PHAsset] = []
+                if let items = mainCV.indexPathsForSelectedItems{
+                    for i in items.sorted(by: {$0.row < $1.row}){
+                        selAssets.append(assetResult[i.row])
+                    }
+                }
+                imagePickerDelegate?.flImagePicker(imagePicker, multiAssetsChanged: selAssets, isSelected: multiAction)
             }
         }
     }
@@ -351,6 +401,9 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
             if let cell = mainCV.cellForItem(at: curIndexPath){
                 if !(cvSelCount >= maxPick && !cell.isSelected){
                     setCellStatus(curIndexPath, status: !cell.isSelected)
+                    if let data = (cell as! MainFLImagePickerCell).imgAsset{
+                        imagePickerDelegate?.flImagePicker(imagePicker, singleAssetChanged: data, isSelected: cell.isSelected)
+                    }
                     generator.impactOccurred()
                 }
             }
@@ -358,23 +411,30 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     }
     
     @objc func cvLongPress(_ gesture: UILongPressGestureRecognizer){
+        // TODO: photo Preview
         print("\(#function)")
     }
     
     @objc func panWhenScroll(pan: UIPanGestureRecognizer){
         let overPick = cvSelCount >= maxPick && multiAction
         panY = pan.location(in: view).y
-        if pan.state == .ended || overPick{
-            if timer != nil && overPick{
-                notificationFeedbackGenerator.notificationOccurred(.warning)
+        
+        if timer == nil{
+            if !overPick{
+                autoRoll()
             }
-            autoRoll(isStop: true)
-        }else if pan.state == .began{
-            autoRoll()
+        }else{
+            if overPick{
+                notificationFeedbackGenerator.notificationOccurred(.warning)
+                autoRoll(isStop: true)
+                imagePickerDelegate?.flImagePicker(imagePicker, reachMaxSelected: getSelectedAssets())
+            }else if pan.state == .ended{
+                autoRoll(isStop: true)
+            }
         }
     }
     
-    // collection
+    /* collection delegate*/
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         assetResult.count
     }
@@ -384,9 +444,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FLImgCell", for: indexPath) as! MainFLImagePickerCell
         
         // set default style
-        cell.imgChecked.image = imagePickerStyle?.imgChecked
-        cell.checkBorderColor = imagePickerStyle?.checkBorderColor
-        cell.checkBackgroundColor = imagePickerStyle?.checkBackgroundColor
+        setCellStyle(cell, style: imagePickerStyle)
         
         // set data
         cell.imgAsset = asset

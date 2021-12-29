@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  FLImagePickerDemo
+
+  Created by Lee Yen Lin on 2021/12/28.
+  
+*/
+"done" = "Done";
+"cancel" = "Cancel";
