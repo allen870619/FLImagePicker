@@ -5,6 +5,8 @@
 # FLImagePicker
 > A simple image picker supported multiple selection.
 
+![demo](https://user-images.githubusercontent.com/32888552/147620894-f3dbce30-2b8a-47d3-bbac-9acf98f9b67e.gif)
+
 ## Features
 * Multiple selection
 * Gesture supported
