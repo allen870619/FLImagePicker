@@ -21,11 +21,9 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "FLImagePicker",
-            dependencies: [],
-            path: "Sources"),
+            dependencies: []),
         .testTarget(
             name: "FLImagePickerTests",
-            dependencies: ["FLImagePicker"],
-            path: "Tests"),
+            dependencies: ["FLImagePicker"]),
     ]
 )
