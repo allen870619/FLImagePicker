@@ -58,7 +58,7 @@ public struct FLDefaults{
         }
         
         // cell
-        public static let coverBackground = UIColor(named: "selectedCover", in: Bundle(for: FLImagePicker.self), compatibleWith: nil)?.withAlphaComponent(0.5)
+        public static let coverBackground = UIColor(named: "selectedCover", in: .module, compatibleWith: nil)?.withAlphaComponent(0.5)
         
         public static let checkBorderColor = UIColor.white.withAlphaComponent(0.75)
     }
@@ -67,8 +67,8 @@ public struct FLDefaults{
     public struct Images{
         public static var checkImg: UIImage?{
             get{
-                if let path = Bundle(for: FLImagePicker.self).path(forResource: "done_white_24dp", ofType: "png"){
-                    return UIImage(contentsOfFile: path)
+                if let img = UIImage(named: "done_white_24dp", in: .module, compatibleWith: .current){
+                    return img
                 }
                 return nil
             }

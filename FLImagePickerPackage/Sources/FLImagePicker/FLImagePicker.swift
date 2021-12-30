@@ -168,3 +168,4 @@ internal struct FLImagePickerOptions{
     let defFps = CGFloat(120)
     let defDetectAreaHeight = CGFloat(200)
 }
+

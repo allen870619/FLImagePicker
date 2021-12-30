@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "done_white_24dp.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
