@@ -91,7 +91,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files = ['Sources/**/*.swift']
+  spec.source_files = ['*.swift', 'Sources/**/*.swift']
   #  spec.public_header_files = "FLImagePicker/FLImagePicker.h"
 
 
@@ -114,7 +114,7 @@ Pod::Spec.new do |spec|
   #  the lib prefix of their name.
   #
 
-  spec.frameworks = "UIKit", "Photos"
+  spec.frameworks = "UIKit", "Photos", "PackageDescription"
 
   # spec.library   = "iconv"
   # spec.libraries = "iconv", "xml2"
