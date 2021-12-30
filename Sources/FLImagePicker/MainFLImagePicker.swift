@@ -90,7 +90,11 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     
     /* initialize*/
     init(){
+        #if !SPM
+        super.init(nibName: "MainFLImagePicker", bundle: Bundle(for: MainFLImagePicker.self))
+        #else
         super.init(nibName: "MainFLImagePicker", bundle: .module)
+        #endif
     }
     
     required init?(coder: NSCoder) {
