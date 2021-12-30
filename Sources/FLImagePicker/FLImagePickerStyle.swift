@@ -47,7 +47,7 @@ public struct FLImagePickerStyle{
 public struct FLDefaults{
     private static var bundle: Bundle{
         get{
-            #if !SPM
+            #if !SWIFT_PACKAGE
             return Bundle(for: FLImagePicker.self)
             #else
             return Bundle.module

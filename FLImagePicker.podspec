@@ -92,7 +92,6 @@ Pod::Spec.new do |spec|
   #
 
   spec.source_files = ['Sources/**/*.swift']
-  spec.exclude_files = ['Tests/**/*.swift']
   #  spec.public_header_files = "FLImagePicker/FLImagePicker.h"
 
 

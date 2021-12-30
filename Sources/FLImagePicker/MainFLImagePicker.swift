@@ -90,7 +90,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     
     /* initialize*/
     init(){
-        #if !SPM
+        #if !SWIFT_PACKAGE
         super.init(nibName: "MainFLImagePicker", bundle: Bundle(for: MainFLImagePicker.self))
         #else
         super.init(nibName: "MainFLImagePicker", bundle: .module)
@@ -109,7 +109,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     
     /* ui*/
     func uiInit(){
-        #if !SPM
+        #if !SWIFT_PACKAGE
         let uib = UINib(nibName: "MainFLImagePickerCell", bundle: Bundle(for: MainFLImagePickerCell.self))
         #else
         let uib = UINib(nibName: "MainFLImagePickerCell", bundle: .module)
