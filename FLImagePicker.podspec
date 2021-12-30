@@ -103,7 +103,7 @@ Pod::Spec.new do |spec|
   #  non-essential files like tests, examples and documentation.
   #
 
-  spec.resources = ['FLImagePickerPackage/**/*']
+  # spec.resources = ['FLImagePickerPackage/**/*']
 
   # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
