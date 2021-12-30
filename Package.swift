@@ -22,10 +22,9 @@ let package = Package(
         .target(
             name: "FLImagePicker",
             dependencies: [],
-            path: "Sources"),
+            swiftSettings: [.define("SPM")]),
         .testTarget(
             name: "FLImagePickerTests",
-            dependencies: ["FLImagePicker"],
-            path: "Tests"),
+            dependencies: ["FLImagePicker"]),
     ]
 )

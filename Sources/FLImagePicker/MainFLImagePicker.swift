@@ -90,7 +90,11 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     
     /* initialize*/
     init(){
+        #if !SPM
+        super.init(nibName: "MainFLImagePicker", bundle: Bundle(for: MainFLImagePicker.self))
+        #else
         super.init(nibName: "MainFLImagePicker", bundle: .module)
+        #endif
     }
     
     required init?(coder: NSCoder) {
@@ -105,7 +109,15 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     
     /* ui*/
     func uiInit(){
-        mainCV.register(UINib(nibName: "MainFLImagePickerCell", bundle: .module), forCellWithReuseIdentifier: "FLImgCell")
+        var uib: UINib!
+        #if !SPM
+        print("123")
+        uib = UINib(nibName: "MainFLImagePickerCell", bundle: Bundle(for: MainFLImagePickerCell.self))
+        #else
+        print("456")
+        uib = UINib(nibName: "MainFLImagePickerCell", bundle: .module)
+        #endif
+        mainCV.register(uib, forCellWithReuseIdentifier: "FLImgCell")
         
         btnFinish = UIButton(type: .system)
         btnFinish.frame = CGRect(x: 0, y: 0, width: 120, height: 36)

@@ -91,7 +91,8 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = ['Sources/**/*.swift']
+  spec.source_files = ['Sources/**/*.swift']
+  #  spec.exclude_files = ['Tests/**/*', 'FLImagePickerDemo/**/*']
   #  spec.public_header_files = "FLImagePicker/FLImagePicker.h"
 
 
@@ -126,7 +127,7 @@ Pod::Spec.new do |spec|
   #  where they will only apply to your library. If you depend on other Podspecs
   #  you can include multiple dependencies to ensure it works.
 
-  # spec.requires_arc = true
+  spec.requires_arc = true
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
