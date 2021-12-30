@@ -21,7 +21,8 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "FLImagePicker",
-            dependencies: []),
+            dependencies: [],
+        swiftSettings: [.define("SPM")]),
         .testTarget(
             name: "FLImagePickerTests",
             dependencies: ["FLImagePicker"]),
