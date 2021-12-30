@@ -91,7 +91,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = ['FLImagePickerPackage/**/*.swift']
+  spec.source_files  = ['FLImagePickerPackage/Sources/*.swift']
   #  spec.public_header_files = "FLImagePicker/FLImagePicker.h"
 
 
@@ -103,7 +103,7 @@ Pod::Spec.new do |spec|
   #  non-essential files like tests, examples and documentation.
   #
 
-  spec.resources = ['FLImagePickerPackage/**/*.xib', 'FLImagePickerPackage/**/*.xcassets']
+  spec.resources = ['FLImagePickerPackage/Sources/*.xib', 'FLImagePickerPackage/Sources/*.xcassets']
 
   # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
