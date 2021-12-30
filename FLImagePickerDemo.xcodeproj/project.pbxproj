@@ -13,7 +13,7 @@
 		9F3ECE15277550BA00253E7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3ECE13277550BA00253E7C /* Main.storyboard */; };
 		9F3ECE17277550BC00253E7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F3ECE16277550BC00253E7C /* Assets.xcassets */; };
 		9F3ECE1A277550BC00253E7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3ECE18277550BC00253E7C /* LaunchScreen.storyboard */; };
-		9FB74A79277D4BB6003A55E9 /* FLImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB74A78277D4BB6003A55E9 /* FLImagePicker */; };
+		9FBE5344277D965A00D390BB /* FLImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 9FBE5343277D965A00D390BB /* FLImagePicker */; };
 		9FD1DABA277A9C2400EADDCE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9FD1DABC277A9C2400EADDCE /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -39,7 +39,7 @@
 		9F3ECE16277550BC00253E7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F3ECE19277550BC00253E7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F3ECE1B277550BC00253E7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9FB74A76277D4BAF003A55E9 /* FLImagePickerPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FLImagePickerPackage; sourceTree = "<group>"; };
+		9FBE5342277D965200D390BB /* FLImagePicker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FLImagePicker; sourceTree = "<group>"; };
 		9FD1DABB277A9C2400EADDCE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9FD1DABD277A9C5D00EADDCE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		9FD1DABE277A9C5D00EADDCE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FB74A79277D4BB6003A55E9 /* FLImagePicker in Frameworks */,
+				9FBE5344277D965A00D390BB /* FLImagePicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +61,7 @@
 		9F3ECE01277550BA00253E7C = {
 			isa = PBXGroup;
 			children = (
-				9FB74A75277D4BAF003A55E9 /* Packages */,
+				9FBE5341277D965200D390BB /* Packages */,
 				9F3ECE0C277550BA00253E7C /* FLImagePickerDemo */,
 				9F3ECE0B277550BA00253E7C /* Products */,
 				9FB74A77277D4BB6003A55E9 /* Frameworks */,
@@ -91,19 +91,19 @@
 			path = FLImagePickerDemo;
 			sourceTree = "<group>";
 		};
-		9FB74A75277D4BAF003A55E9 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				9FB74A76277D4BAF003A55E9 /* FLImagePickerPackage */,
-			);
-			name = Packages;
-			sourceTree = "<group>";
-		};
 		9FB74A77277D4BB6003A55E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9FBE5341277D965200D390BB /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				9FBE5342277D965200D390BB /* FLImagePicker */,
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,7 +124,7 @@
 			);
 			name = FLImagePickerDemo;
 			packageProductDependencies = (
-				9FB74A78277D4BB6003A55E9 /* FLImagePicker */,
+				9FBE5343277D965A00D390BB /* FLImagePicker */,
 			);
 			productName = FLImagePickerDemo;
 			productReference = 9F3ECE0A277550BA00253E7C /* FLImagePickerDemo.app */;
@@ -422,7 +422,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9FB74A78277D4BB6003A55E9 /* FLImagePicker */ = {
+		9FBE5343277D965A00D390BB /* FLImagePicker */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FLImagePicker;
 		};
