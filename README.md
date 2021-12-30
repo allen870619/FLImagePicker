@@ -21,6 +21,14 @@
 pod 'FLImagePicker'
 ```
 
+**Swift Package Manager**
+
+```
+dependencies: [
+.package(url: "https://github.com/allen870619/FLImagePicker.git", from: "version-tag")
+]
+```
+
 ## Usage
 
 Basic Usage
