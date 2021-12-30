@@ -111,10 +111,8 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     func uiInit(){
         var uib: UINib!
         #if !SPM
-        print("123")
         uib = UINib(nibName: "MainFLImagePickerCell", bundle: Bundle(for: MainFLImagePickerCell.self))
         #else
-        print("456")
         uib = UINib(nibName: "MainFLImagePickerCell", bundle: .module)
         #endif
         mainCV.register(uib, forCellWithReuseIdentifier: "FLImgCell")

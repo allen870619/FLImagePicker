@@ -101,7 +101,7 @@
 		9FBE5341277D965200D390BB /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				9FBE5345277D9DC300D390BB /* FLImagePicker */,
+        9FBE538E277DB18700D390BB /* FLImagePicker */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
