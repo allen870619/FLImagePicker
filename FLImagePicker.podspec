@@ -91,8 +91,8 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files = ['**/*.swift']
-  spec.exclude_files = ['Tests/**/*', 'FLImagePickerDemo/**/*']
+  spec.source_files = ['Sources/**/*.swift']
+  #  spec.exclude_files = ['Tests/**/*', 'FLImagePickerDemo/**/*']
   #  spec.public_header_files = "FLImagePicker/FLImagePicker.h"
 
 
