@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "FLImagePicker"
-  spec.version      = "0.1.0"
+  spec.version      = "0.1.1"
   spec.summary      = "A simple multi-Image picker with gesture."
 
   # This description is used to generate tags and improve search results.
@@ -104,7 +104,7 @@ Pod::Spec.new do |spec|
   #  non-essential files like tests, examples and documentation.
   #
 
-  spec.resources = ['Sources/**/*.xib', 'Sources/**/*.xcassets']
+  spec.resources = ['Sources/FLImagePicker/Resources/*.xib', 'Sources/FLImagePicker/Resources/*.xcassets']
 
   # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
