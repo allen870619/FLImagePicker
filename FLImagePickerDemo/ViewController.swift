@@ -16,7 +16,21 @@ class ViewController: UIViewController, FLImagePickerDelegate {
     }
     
     func flImagePicker(_ picker: FLImagePicker, didFinished imageAssets: [PHAsset]) {
-        print(imageAssets)
+        let start = Date().timeIntervalSinceReferenceDate
+        var count = 0
+        for asset in imageAssets {
+            
+            PHImageManager().requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFit, options: nil){ image, _ in
+                                print(image)
+                count += 1
+                if count == 6{
+                    let delta = Date().timeIntervalSinceReferenceDate - start
+                    print(delta)
+                }
+            }
+        }
+        
+        //        print(imageAssets)
     }
     
     func flImagePicker(_ picker: FLImagePicker, singleAssetChanged imageAsset: PHAsset, isSelected: Bool) {

@@ -13,8 +13,8 @@
 		9F3ECE15277550BA00253E7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3ECE13277550BA00253E7C /* Main.storyboard */; };
 		9F3ECE17277550BC00253E7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F3ECE16277550BC00253E7C /* Assets.xcassets */; };
 		9F3ECE1A277550BC00253E7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3ECE18277550BC00253E7C /* LaunchScreen.storyboard */; };
-		9FBC6A762782A390000D748E /* FLImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 9FBC6A752782A390000D748E /* FLImagePicker */; };
 		9FD1DABA277A9C2400EADDCE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9FD1DABC277A9C2400EADDCE /* Localizable.strings */; };
+		9FEA012D28D02C55005DCBD2 /* FLImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 9FEA012C28D02C55005DCBD2 /* FLImagePicker */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,11 +39,11 @@
 		9F3ECE16277550BC00253E7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F3ECE19277550BC00253E7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F3ECE1B277550BC00253E7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9FBC6A772782A3D2000D748E /* FLImagePicker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FLImagePicker; sourceTree = "<group>"; };
 		9FD1DABB277A9C2400EADDCE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9FD1DABD277A9C5D00EADDCE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		9FD1DABE277A9C5D00EADDCE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		9FD1DABF277A9C5D00EADDCE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		9FEA012E28D02D4B005DCBD2 /* FLImagePicker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FLImagePicker; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FBC6A762782A390000D748E /* FLImagePicker in Frameworks */,
+				9FEA012D28D02C55005DCBD2 /* FLImagePicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,7 +101,7 @@
 		9FBC6A732782A358000D748E /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				9FBC6A772782A3D2000D748E /* FLImagePicker */,
+				9FEA012E28D02D4B005DCBD2 /* FLImagePicker */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -124,7 +124,7 @@
 			);
 			name = FLImagePickerDemo;
 			packageProductDependencies = (
-				9FBC6A752782A390000D748E /* FLImagePicker */,
+				9FEA012C28D02C55005DCBD2 /* FLImagePicker */,
 			);
 			productName = FLImagePickerDemo;
 			productReference = 9F3ECE0A277550BA00253E7C /* FLImagePickerDemo.app */;
@@ -422,7 +422,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9FBC6A752782A390000D748E /* FLImagePicker */ = {
+		9FEA012C28D02C55005DCBD2 /* FLImagePicker */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FLImagePicker;
 		};

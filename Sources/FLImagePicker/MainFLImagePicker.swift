@@ -62,7 +62,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     private var numsOfRow: CGFloat = 3 // cells of row
     private var maxPick = 100
     private var fspd: CGFloat = 3 // step of pixel
-    private var fps: CGFloat = 120 // update speed
+    private var fps: CGFloat = 120 // refresh speed
     private var detectAreaHeight: CGFloat = 240
     
     /* calculate data, no need to change*/
@@ -89,7 +89,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     let generator = UIImpactFeedbackGenerator(style: .light)
     
     /* initialize*/
-    init(){
+    init() {
         #if !SPM
         super.init(nibName: "MainFLImagePicker", bundle: Bundle(for: MainFLImagePicker.self))
         #else
@@ -143,7 +143,11 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         isModalInPresentation = true
         
         // cv setup - numsOfRow + 1
-        let edge = (UIScreen.main.bounds.width - numsOfRow + 1) / numsOfRow
+        var width = mainCV.frame.width
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            width = 704
+        }
+        let edge = (width - numsOfRow + 1) / numsOfRow
         cvFlow.itemSize = CGSize(width: edge, height: edge)
         cvFlow.minimumLineSpacing = 1
         cvFlow.minimumInteritemSpacing = 1
