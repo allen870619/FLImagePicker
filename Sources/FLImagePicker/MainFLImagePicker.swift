@@ -143,7 +143,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         isModalInPresentation = true
         
         // cv setup - numsOfRow + 1
-        var width = mainCV.frame.width
+        var width = UIScreen.main.bounds.size.width
         if UIDevice.current.userInterfaceIdiom == .pad {
             width = 704
         }
