@@ -31,7 +31,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9F0A51D228D838FD005868FD /* FLImagePicker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FLImagePicker; sourceTree = "<group>"; };
+		8D0A1BE229FBBE4E00B16C41 /* FLImagePicker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FLImagePicker; sourceTree = "<group>"; };
+		9F0A51D228D838FD005868FD /* FLImagePicker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FLImagePicker; sourceTree = "<group>"; };
 		9F3ECE0A277550BA00253E7C /* FLImagePickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FLImagePickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F3ECE0D277550BA00253E7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F3ECE0F277550BA00253E7C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 		9FBC6A732782A358000D748E /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				8D0A1BE229FBBE4E00B16C41 /* FLImagePicker */,
 				9F0A51D228D838FD005868FD /* FLImagePicker */,
 			);
 			name = Packages;
