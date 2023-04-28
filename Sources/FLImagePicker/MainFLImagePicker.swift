@@ -29,7 +29,7 @@
 import UIKit
 import Photos
 
-internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate {
+internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, PHPhotoLibraryChangeObserver {
     @IBOutlet weak var mainCV: UICollectionView!
     @IBOutlet weak var cvFlow: UICollectionViewFlowLayout!
     var btnFinish: UIButton!
@@ -211,10 +211,13 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         mainCV.delegate = self
         mainCV.dataSource = self
         
+        // register to observe any changes in photo library
+        PHPhotoLibrary.shared().register(self)
+        
         // album
         if #available(iOS 14, *){
             PHPhotoLibrary.requestAuthorization(for: .readWrite){status in
-                if status != .authorized{
+                if !(status == .authorized || status == .limited) {
                     return
                 }
                 self.getFetch()
@@ -466,5 +469,10 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         cell.imgAsset = asset
         cell.isSelected = mainCV.indexPathsForSelectedItems?.contains(indexPath) ?? false
         return cell
+    }
+
+    // MARK: - PHPhotoLibraryChangeObserver
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        getFetch()
     }
 }
