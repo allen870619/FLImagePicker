@@ -30,21 +30,22 @@ import Photos
 import UIKit
 
 public class FLImagePicker: UINavigationController {
-    private let picker = MainFLImagePicker()
+    private let mainViewController: MainViewController
+
     private var pickerStyle = FLImagePickerStyle()
     private var pickerOptions = FLImagePickerOptions() {
         didSet {
-            picker.updateOptions(pickerOptions)
+            mainViewController.updateOptions(pickerOptions)
         }
     }
 
     /* delegate*/
     public var imageDelegate: FLImagePickerDelegate? {
         set(delegate) {
-            picker.imagePickerDelegate = delegate
+            mainViewController.imagePickerDelegate = delegate
         }
         get {
-            picker.imagePickerDelegate
+            mainViewController.imagePickerDelegate
         }
     }
 
@@ -56,7 +57,7 @@ public class FLImagePicker: UINavigationController {
             } else {
                 pickerStyle = FLImagePickerStyle()
             }
-            picker.imagePickerStyle = pickerStyle
+            mainViewController.imagePickerStyle = pickerStyle
         }
         get {
             pickerStyle
@@ -136,11 +137,12 @@ public class FLImagePicker: UINavigationController {
 
     /* data*/
     var selectedAsset: [PHAsset] {
-        picker.getSelectedAssets()
+        mainViewController.getSelectedAssets()
     }
 
     public init() {
-        super.init(nibName: nil, bundle: nil)
+        mainViewController = MainViewController()
+        super.init(rootViewController: mainViewController)
     }
 
     @available(*, unavailable)
@@ -157,23 +159,7 @@ public class FLImagePicker: UINavigationController {
         navigationBar.backgroundColor = .systemBackground
         navigationBar.isTranslucent = true
 
-        picker.imagePickerStyle = pickerStyle
-        picker.imagePicker = self
-        pushViewController(picker, animated: true)
+        mainViewController.imagePickerStyle = pickerStyle
+        mainViewController.imagePicker = self
     }
-}
-
-internal struct FLImagePickerOptions {
-    var numsOfRow: CGFloat = 3 // cells of row
-    var maxPick = 100
-    var ppm: CGFloat = 3 // (pps, pixel per step)
-    var fps: CGFloat = 120 // update speed
-    var detectAreaHeight: CGFloat = 200
-
-    // default
-    let defNumOfRow = CGFloat(3)
-    let defMaxPick = 100
-    let defPpm = CGFloat(3)
-    let defFps = CGFloat(120)
-    let defDetectAreaHeight = CGFloat(200)
 }

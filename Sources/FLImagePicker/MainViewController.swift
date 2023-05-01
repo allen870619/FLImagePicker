@@ -1,5 +1,5 @@
 //
-//  MainFLImagePicker.swift
+//  MainViewController.swift
 //  FLImagePicker
 //
 //  Created by Allen Lee on 2021/12/23.
@@ -30,7 +30,7 @@ import Photos
 import PureLayout
 import UIKit
 
-internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, PHPhotoLibraryChangeObserver {
+internal class MainViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, PHPhotoLibraryChangeObserver {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlow).configureForAutoLayout()
     private lazy var collectionViewFlow = UICollectionViewFlowLayout()
     private lazy var btnFinish = UIButton(type: .system)
@@ -47,7 +47,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         didSet {
             if isViewLoaded {
                 for cell in collectionView.visibleCells {
-                    if let cell = cell as? MainFLImagePickerCell {
+                    if let cell = cell as? ImageCollectionViewCell {
                         setCellStyle(cell, style: imagePickerStyle)
                     }
                 }
@@ -119,7 +119,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
 
     /* ui*/
     private func uiInit() {
-        collectionView.register(MainFLImagePickerCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
 
         btnFinish.frame = CGRect(x: 0, y: 0, width: 120, height: 36)
         btnFinish.setTitle(NSLocalizedString("done", comment: "done"), for: .normal)
@@ -176,7 +176,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         collectionView.addGestureRecognizer(longTapGesture)
     }
 
-    func setCellStyle(_ cell: MainFLImagePickerCell, style: FLImagePickerStyle?) {
+    func setCellStyle(_ cell: ImageCollectionViewCell, style: FLImagePickerStyle?) {
         cell.coverColor = style?.coverColor
         cell.checkImage = style?.checkImage
         cell.checkBorderColor = style?.checkBorderColor
@@ -426,7 +426,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
             if let cell = collectionView.cellForItem(at: curIndexPath) {
                 if !(cvSelCount >= maxPick && !cell.isSelected) {
                     setCellStatus(curIndexPath, status: !cell.isSelected)
-                    if let data = (cell as! MainFLImagePickerCell).imageAsset {
+                    if let data = (cell as! ImageCollectionViewCell).imageAsset {
                         imagePickerDelegate?.flImagePicker(imagePicker, singleAssetChanged: data, isSelected: cell.isSelected)
                     }
                     generator.impactOccurred()
@@ -466,7 +466,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let asset = assetResult[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MainFLImagePickerCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ImageCollectionViewCell
 
         // set default style
         setCellStyle(cell, style: imagePickerStyle)

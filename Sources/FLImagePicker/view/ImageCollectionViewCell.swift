@@ -1,5 +1,5 @@
 //
-//  MainFLImagePickerCell.swift
+//  ImageCollectionViewCell.swift
 //  FLImagePicker
 //
 //  Created by Allen Lee on 2021/12/23.
@@ -30,7 +30,7 @@ import Photos
 import PureLayout
 import UIKit
 
-class MainFLImagePickerCell: UICollectionViewCell {
+class ImageCollectionViewCell: UICollectionViewCell {
     private let imageResSize: CGFloat = 400
     private let checkHinterHeight: CGFloat = 20
 
