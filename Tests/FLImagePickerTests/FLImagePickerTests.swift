@@ -1,5 +1,5 @@
-import XCTest
 @testable import FLImagePicker
+import XCTest
 
 final class FLImagePickerTests: XCTestCase {
     func testExample() throws {

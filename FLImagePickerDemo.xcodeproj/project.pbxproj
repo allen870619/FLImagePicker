@@ -31,8 +31,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8D0A1BE229FBBE4E00B16C41 /* FLImagePicker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FLImagePicker; sourceTree = "<group>"; };
-		9F0A51D228D838FD005868FD /* FLImagePicker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FLImagePicker; sourceTree = "<group>"; };
 		9F3ECE0A277550BA00253E7C /* FLImagePickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FLImagePickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F3ECE0D277550BA00253E7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F3ECE0F277550BA00253E7C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +43,7 @@
 		9FD1DABD277A9C5D00EADDCE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		9FD1DABE277A9C5D00EADDCE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		9FD1DABF277A9C5D00EADDCE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		A8C8344529FF76E700850477 /* FLImagePicker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FLImagePicker; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,8 +101,7 @@
 		9FBC6A732782A358000D748E /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				8D0A1BE229FBBE4E00B16C41 /* FLImagePicker */,
-				9F0A51D228D838FD005868FD /* FLImagePicker */,
+				A8C8344529FF76E700850477 /* FLImagePicker */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -119,6 +117,7 @@
 				9F3ECE07277550BA00253E7C /* Frameworks */,
 				9F3ECE08277550BA00253E7C /* Resources */,
 				9F3ECE33277550ED00253E7C /* Embed Frameworks */,
+				A84F988E29FF6A8A00E98EDF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -179,6 +178,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A84F988E29FF6A8A00E98EDF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftformat >/dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9F3ECE06277550BA00253E7C /* Sources */ = {

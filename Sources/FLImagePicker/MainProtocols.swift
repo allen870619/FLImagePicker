@@ -29,24 +29,24 @@
 import Photos
 
 /* protocols*/
-public protocol FLImagePickerDelegate{
+public protocol FLImagePickerDelegate {
     func flImagePicker(_ picker: FLImagePicker, singleAssetChanged imageAsset: PHAsset, isSelected: Bool)
-    
+
     func flImagePicker(_ picker: FLImagePicker, multiAssetsChanged imageAssets: [PHAsset], isSelected: Bool)
-    
+
     func flImagePicker(_ picker: FLImagePicker, reachMaxSelected imageAssets: [PHAsset])
-    
+
     func flImagePicker(_ picker: FLImagePicker, didFinished imageAssets: [PHAsset])
-    
+
     func flImagePicker(didCancelled picker: FLImagePicker)
 }
 
-public extension FLImagePickerDelegate{
-    func flImagePicker(_ picker: FLImagePicker, singleAssetChanged imageAsset: PHAsset, isSelected: Bool){}
-    
-    func flImagePicker(_ picker: FLImagePicker, multiAssetsChanged imageAssets: [PHAsset], isSelected: Bool){}
-    
-    func flImagePicker(_ picker: FLImagePicker, reachMaxSelected imageAssets: [PHAsset]){}
-    
-    func flImagePicker(didCancelled picker: FLImagePicker){}
+public extension FLImagePickerDelegate {
+    func flImagePicker(_: FLImagePicker, singleAssetChanged _: PHAsset, isSelected _: Bool) {}
+
+    func flImagePicker(_: FLImagePicker, multiAssetsChanged _: [PHAsset], isSelected _: Bool) {}
+
+    func flImagePicker(_: FLImagePicker, reachMaxSelected _: [PHAsset]) {}
+
+    func flImagePicker(didCancelled _: FLImagePicker) {}
 }

@@ -28,60 +28,54 @@
 
 import UIKit
 
-public struct FLImagePickerStyle{
+public struct FLImagePickerStyle {
     /* cell style*/
     /// check hinter
     public var checkBorderColor: UIColor? = FLDefaults.Colors.checkBorderColor
     public var checkBackgroundColor: UIColor? = FLDefaults.Colors.primary
     public var checkImage: UIImage? = FLDefaults.Images.checkImg
-    
+
     // cover
     public var coverColor: UIColor? = FLDefaults.Colors.coverBackground
-    
+
     /* button*/
     public var btnColor: UIColor? = FLDefaults.Colors.primary
-    
-    public init(){}
+
+    public init() {}
 }
 
-public struct FLDefaults{
-    private static var bundle: Bundle{
-        get{
-            #if !SWIFT_PACKAGE
+public enum FLDefaults {
+    private static var bundle: Bundle {
+        #if !SWIFT_PACKAGE
             return Bundle(for: FLImagePicker.self)
-            #else
+        #else
             return Bundle.module
-            #endif
-        }
+        #endif
     }
-    
+
     /* colors*/
-    public struct Colors{
-        public static var primary: UIColor{
-            get{
-                if let color = UIColor(named: "AccentColor"){
-                    return color
-                }else{
-                    return .link
-                }
+    public enum Colors {
+        public static var primary: UIColor {
+            if let color = UIColor(named: "AccentColor") {
+                return color
+            } else {
+                return .link
             }
         }
-        
+
         // cell
         public static let coverBackground = UIColor(named: "selectedCover", in: bundle, compatibleWith: nil)?.withAlphaComponent(0.5)
-        
+
         public static let checkBorderColor = UIColor.white.withAlphaComponent(0.75)
     }
 
     /* images*/
-    public struct Images{
-        public static var checkImg: UIImage?{
-            get{
-                if let img = UIImage(named: "done_white_24dp", in: bundle, compatibleWith: .current){
-                    return img
-                }
-                return nil
+    public enum Images {
+        public static var checkImg: UIImage? {
+            if let img = UIImage(named: "done_white_24dp", in: bundle, compatibleWith: .current) {
+                return img
             }
+            return nil
         }
     }
 }
