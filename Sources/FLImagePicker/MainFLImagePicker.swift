@@ -27,13 +27,14 @@
 //  SOFTWARE.
 
 import Photos
+import PureLayout
 import UIKit
 
 internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, PHPhotoLibraryChangeObserver {
-    @IBOutlet var mainCV: UICollectionView!
-    @IBOutlet var cvFlow: UICollectionViewFlowLayout!
-    var btnFinish: UIButton!
-    var btnCancel: UIButton!
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlow).configureForAutoLayout()
+    private lazy var collectionViewFlow = UICollectionViewFlowLayout()
+    private lazy var btnFinish = UIButton(type: .system)
+    private lazy var btnCancel = UIButton(type: .system)
 
     // photoKit
     var assetResult: PHFetchResult<PHAsset> = PHFetchResult()
@@ -45,7 +46,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     var imagePickerStyle: FLImagePickerStyle? {
         didSet {
             if isViewLoaded {
-                for cell in mainCV.visibleCells {
+                for cell in collectionView.visibleCells {
                     if let cell = cell as? MainFLImagePickerCell {
                         setCellStyle(cell, style: imagePickerStyle)
                     }
@@ -71,7 +72,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     var startIndexPath: IndexPath?
     var thisSelected: Set<IndexPath> = [] // record single action's cell
     var cvSelCount: Int {
-        mainCV.indexPathsForSelectedItems?.count ?? 0
+        collectionView.indexPathsForSelectedItems?.count ?? 0
     }
 
     // auto Scroll
@@ -86,13 +87,8 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
     let generator = UIImpactFeedbackGenerator(style: .light)
 
-    /* initialize*/
     init() {
-        #if !SPM
-            super.init(nibName: "MainFLImagePicker", bundle: Bundle(for: MainFLImagePicker.self))
-        #else
-            super.init(nibName: "MainFLImagePicker", bundle: .module)
-        #endif
+        super.init(nibName: nil, bundle: nil)
     }
 
     @available(*, unavailable)
@@ -102,15 +98,29 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupLayout()
+        initCustomView()
+
         uiInit()
         dataInit()
     }
 
-    /* ui*/
-    func uiInit() {
-        mainCV.register(MainFLImagePickerCell.self, forCellWithReuseIdentifier: "cell")
+    private func setupLayout() {
+        [collectionView].forEach { view.addSubview($0) }
 
-        btnFinish = UIButton(type: .system)
+        collectionView.autoPinEdgesToSuperviewSafeArea(with: .init(), excludingEdge: .bottom)
+        collectionView.autoPinEdge(toSuperviewEdge: .bottom)
+    }
+
+    private func initCustomView() {
+        collectionView.collectionViewLayout = collectionViewFlow
+    }
+
+    /* ui*/
+    private func uiInit() {
+        collectionView.register(MainFLImagePickerCell.self, forCellWithReuseIdentifier: "cell")
+
         btnFinish.frame = CGRect(x: 0, y: 0, width: 120, height: 36)
         btnFinish.setTitle(NSLocalizedString("done", comment: "done"), for: .normal)
         btnFinish.setTitleColor(imagePickerStyle?.btnColor, for: .normal)
@@ -121,7 +131,6 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         let right = UIBarButtonItem(customView: rightCustomView)
         navigationItem.rightBarButtonItem = right
 
-        btnCancel = UIButton(type: .system)
         btnCancel.frame = CGRect(x: 0, y: 0, width: 120, height: 36)
         btnCancel.setTitle(NSLocalizedString("cancel", comment: "cancel"), for: .normal)
         btnCancel.setTitleColor(imagePickerStyle?.btnColor, for: .normal)
@@ -141,30 +150,30 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
             width = 704
         }
         let edge = (width - numsOfRow + 1) / numsOfRow
-        cvFlow.itemSize = CGSize(width: edge, height: edge)
-        cvFlow.minimumLineSpacing = 1
-        cvFlow.minimumInteritemSpacing = 1
-        //        cvFlow.prepare()  // <-- call prepare before invalidateLayout
-        //        cvFlow.invalidateLayout()
+        collectionViewFlow.itemSize = CGSize(width: edge, height: edge)
+        collectionViewFlow.minimumLineSpacing = 1
+        collectionViewFlow.minimumInteritemSpacing = 1
+        //        collectionViewFlow.prepare()  // <-- call prepare before invalidateLayout
+        //        collectionViewFlow.invalidateLayout()
 
         // gesture
-        mainCV.allowsMultipleSelection = true
-        mainCV.allowsSelection = true
+        collectionView.allowsMultipleSelection = true
+        collectionView.allowsSelection = true
 
         // pan
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panWhenScroll))
         panGesture.addTarget(self, action: #selector(cvPan))
-        let ori = (mainCV.gestureRecognizers?.firstIndex(of: mainCV.panGestureRecognizer)) ?? 0
-        mainCV.gestureRecognizers?.insert(panGesture, at: ori)
+        let ori = (collectionView.gestureRecognizers?.firstIndex(of: collectionView.panGestureRecognizer)) ?? 0
+        collectionView.gestureRecognizers?.insert(panGesture, at: ori)
 
         // tap
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cvTap))
-        mainCV.addGestureRecognizer(tapGesture)
+        collectionView.addGestureRecognizer(tapGesture)
 
         // long tap
         let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(cvLongPress))
         longTapGesture.delaysTouchesBegan = false
-        mainCV.addGestureRecognizer(longTapGesture)
+        collectionView.addGestureRecognizer(longTapGesture)
     }
 
     func setCellStyle(_ cell: MainFLImagePickerCell, style: FLImagePickerStyle?) {
@@ -176,16 +185,19 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
 
     // outlet
     @objc func onFinish(_: Any) {
-        dismiss(animated: true) { [self] in
-            imagePickerDelegate?.flImagePicker(imagePicker, didFinished: getSelectedAssets())
-            imagePicker = nil
+        dismiss(animated: true) { [weak self] in
+            guard let self = self else { return }
+            self.imagePickerDelegate?.flImagePicker(self.imagePicker,
+                                                    didFinished: self.getSelectedAssets())
+            self.imagePicker = nil
         }
     }
 
     @objc func onCancel(_: Any) {
-        dismiss(animated: true) { [self] in
-            imagePickerDelegate?.flImagePicker(didCancelled: imagePicker)
-            imagePicker = nil
+        dismiss(animated: true) { [weak self] in
+            guard let self = self else { return }
+            self.imagePickerDelegate?.flImagePicker(didCancelled: self.imagePicker)
+            self.imagePicker = nil
         }
     }
 
@@ -201,8 +213,8 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
         }
 
         // collection view
-        mainCV.delegate = self
-        mainCV.dataSource = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
 
         // register to observe any changes in photo library
         PHPhotoLibrary.shared().register(self)
@@ -243,13 +255,13 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
 
         // reload
         DispatchQueue.main.async {
-            self.mainCV.reloadData()
+            self.collectionView.reloadData()
         }
     }
 
     func getSelectedAssets() -> [PHAsset] {
         var result: [PHAsset] = []
-        if let items = mainCV.indexPathsForSelectedItems?.sorted(by: { $0.row < $1.row }) {
+        if let items = collectionView.indexPathsForSelectedItems?.sorted(by: { $0.row < $1.row }) {
             for i in items {
                 result.append(assetResult[i.row])
             }
@@ -261,10 +273,10 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     func setCellStatus(_ indexPath: IndexPath, status: Bool) {
         if status {
             if cvSelCount < maxPick {
-                mainCV.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
             }
         } else {
-            mainCV.deselectItem(at: indexPath, animated: true)
+            collectionView.deselectItem(at: indexPath, animated: true)
         }
 
         // update btn total
@@ -291,15 +303,15 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
             }
             timer = Timer.scheduledTimer(withTimeInterval: 1 / fps, repeats: true) { [self] _ in
 
-                if panY > mainCV.frame.maxY - detectAreaHeight { // go down
-                    let spd = ((panY - mainCV.frame.maxY + detectAreaHeight) / detectAreaHeight * fspd)
-                    if mainCV.frameLayoutGuide.layoutFrame.maxY - safeAreaBottom < mainCV.collectionViewLayout.collectionViewContentSize.height {
-                        mainCV.scrollRectToVisible(CGRect(x: 0, y: mainCV.frameLayoutGuide.layoutFrame.maxY - safeAreaBottom, width: 1, height: spd), animated: false)
+                if panY > collectionView.frame.maxY - detectAreaHeight { // go down
+                    let spd = ((panY - collectionView.frame.maxY + detectAreaHeight) / detectAreaHeight * fspd)
+                    if collectionView.frameLayoutGuide.layoutFrame.maxY - safeAreaBottom < collectionView.collectionViewLayout.collectionViewContentSize.height {
+                        collectionView.scrollRectToVisible(CGRect(x: 0, y: collectionView.frameLayoutGuide.layoutFrame.maxY - safeAreaBottom, width: 1, height: spd), animated: false)
                     }
 
-                } else if panY < mainCV.frame.minY + detectAreaHeight { // go up
-                    let spd = ((mainCV.frame.minY + detectAreaHeight - panY) / detectAreaHeight * fspd)
-                    mainCV.scrollRectToVisible(CGRect(x: 0, y: mainCV.frameLayoutGuide.layoutFrame.minY - spd, width: 1, height: spd), animated: false)
+                } else if panY < collectionView.frame.minY + detectAreaHeight { // go up
+                    let spd = ((collectionView.frame.minY + detectAreaHeight - panY) / detectAreaHeight * fspd)
+                    collectionView.scrollRectToVisible(CGRect(x: 0, y: collectionView.frameLayoutGuide.layoutFrame.minY - spd, width: 1, height: spd), animated: false)
                 }
             }
         }
@@ -308,14 +320,14 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     /* objc*/
     // pan func
     @objc func cvPan(pan: UIPanGestureRecognizer) {
-        guard let curIndexPath = mainCV.indexPathForItem(at: pan.location(in: mainCV)) else {
+        guard let curIndexPath = collectionView.indexPathForItem(at: pan.location(in: collectionView)) else {
             return
         }
 
         // init and deinit
         if pan.state == .began {
             // if true, then action will be false
-            multiAction = !mainCV.cellForItem(at: curIndexPath)!.isSelected
+            multiAction = !collectionView.cellForItem(at: curIndexPath)!.isSelected
 
             // self initial
             startIndexPath = curIndexPath
@@ -348,10 +360,10 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
             var hasNew = false
             // go down
             if curIndexPath.row >= startIndexPath.row { // down
-                for cell in mainCV.visibleCells.sorted(by: {
-                    mainCV.indexPath(for: $0)?.row ?? 0 < mainCV.indexPath(for: $1)?.row ?? 1
+                for cell in collectionView.visibleCells.sorted(by: {
+                    collectionView.indexPath(for: $0)?.row ?? 0 < collectionView.indexPath(for: $1)?.row ?? 1
                 }) {
-                    if let tIndexPath = mainCV.indexPath(for: cell) {
+                    if let tIndexPath = collectionView.indexPath(for: cell) {
                         // pan back reset to origin
                         if tIndexPath.row > curIndexPath.row, thisSelected.contains(tIndexPath) {
                             setCellStatus(tIndexPath, status: !multiAction)
@@ -373,10 +385,10 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
 
             // up
             if curIndexPath.row <= startIndexPath.row {
-                for cell in mainCV.visibleCells.sorted(by: {
-                    mainCV.indexPath(for: $0)?.row ?? 1 > mainCV.indexPath(for: $1)?.row ?? 0
+                for cell in collectionView.visibleCells.sorted(by: {
+                    collectionView.indexPath(for: $0)?.row ?? 1 > collectionView.indexPath(for: $1)?.row ?? 0
                 }) {
-                    if let tIndexPath = mainCV.indexPath(for: cell) {
+                    if let tIndexPath = collectionView.indexPath(for: cell) {
                         // pan back reset to origin
                         if tIndexPath.row < curIndexPath.row, thisSelected.contains(tIndexPath) {
                             setCellStatus(tIndexPath, status: !multiAction)
@@ -399,7 +411,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
             // notify delegate if selected cell has change
             if hasNew, timer != nil || cvSelCount < maxPick {
                 var selAssets: [PHAsset] = []
-                if let items = mainCV.indexPathsForSelectedItems {
+                if let items = collectionView.indexPathsForSelectedItems {
                     for i in items.sorted(by: { $0.row < $1.row }) {
                         selAssets.append(assetResult[i.row])
                     }
@@ -410,8 +422,8 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
     }
 
     @objc func cvTap(_ gesture: UITapGestureRecognizer) {
-        if let curIndexPath = mainCV.indexPathForItem(at: gesture.location(in: mainCV)) {
-            if let cell = mainCV.cellForItem(at: curIndexPath) {
+        if let curIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) {
+            if let cell = collectionView.cellForItem(at: curIndexPath) {
                 if !(cvSelCount >= maxPick && !cell.isSelected) {
                     setCellStatus(curIndexPath, status: !cell.isSelected)
                     if let data = (cell as! MainFLImagePickerCell).imageAsset {
@@ -461,7 +473,7 @@ internal class MainFLImagePicker: UIViewController, UICollectionViewDelegate, UI
 
         // set data
         cell.imageAsset = asset
-        cell.isSelected = mainCV.indexPathsForSelectedItems?.contains(indexPath) ?? false
+        cell.isSelected = collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false
         return cell
     }
 

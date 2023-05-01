@@ -139,17 +139,27 @@ public class FLImagePicker: UINavigationController {
         picker.getSelectedAssets()
     }
 
-    /* initialize*/
     public init() {
         super.init(nibName: nil, bundle: nil)
-        viewControllers.append(picker)
-        picker.imagePickerStyle = pickerStyle
-        picker.imagePicker = self
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override public func viewDidLoad() {
+        initCustomView()
+    }
+
+    private func initCustomView() {
+        navigationBar.barStyle = .default
+        navigationBar.backgroundColor = .systemBackground
+        navigationBar.isTranslucent = true
+
+        picker.imagePickerStyle = pickerStyle
+        picker.imagePicker = self
+        pushViewController(picker, animated: true)
     }
 }
 
