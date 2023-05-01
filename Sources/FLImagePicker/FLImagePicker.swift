@@ -26,141 +26,140 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import UIKit
 import Photos
+import UIKit
 
 public class FLImagePicker: UINavigationController {
     private let picker = MainFLImagePicker()
     private var pickerStyle = FLImagePickerStyle()
-    private var pickerOptions = FLImagePickerOptions(){
-        didSet{
+    private var pickerOptions = FLImagePickerOptions() {
+        didSet {
             picker.updateOptions(pickerOptions)
         }
     }
-    
+
     /* delegate*/
-    public var imageDelegate: FLImagePickerDelegate?{
-        set(delegate){
+    public var imageDelegate: FLImagePickerDelegate? {
+        set(delegate) {
             picker.imagePickerDelegate = delegate
         }
-        get{
-            return picker.imagePickerDelegate
+        get {
+            picker.imagePickerDelegate
         }
     }
-    
+
     /* style*/
-    public var style: FLImagePickerStyle?{
-        set(v){
-            if let v = v{
+    public var style: FLImagePickerStyle? {
+        set(v) {
+            if let v = v {
                 pickerStyle = v
-            }else{
+            } else {
                 pickerStyle = FLImagePickerStyle()
             }
             picker.imagePickerStyle = pickerStyle
         }
-        get{
-            return pickerStyle
+        get {
+            pickerStyle
         }
     }
-    
+
     /* options*/
     public var numsOfRow: CGFloat? {
-        set(v){
-            if let v = v{
+        set(v) {
+            if let v = v {
                 pickerOptions.numsOfRow = v
-            }else{
+            } else {
                 pickerOptions.numsOfRow = pickerOptions.defNumOfRow
             }
         }
-        get{
-            return pickerOptions.numsOfRow
+        get {
+            pickerOptions.numsOfRow
         }
     }
-    
+
     public var maxPick: Int? {
-        set(v){
-            if let v = v{
+        set(v) {
+            if let v = v {
                 pickerOptions.maxPick = v
-            }else{
+            } else {
                 pickerOptions.maxPick = pickerOptions.defMaxPick
             }
         }
-        get{
-            return pickerOptions.maxPick
+        get {
+            pickerOptions.maxPick
         }
     }
-    
+
     /// pixel per moved
     ///
     /// Total moved distance would be ppm * fps
     public var ppm: CGFloat? {
-        set(v){
-            if let v = v{
+        set(v) {
+            if let v = v {
                 pickerOptions.ppm = v
-            }else{
+            } else {
                 pickerOptions.ppm = pickerOptions.defPpm
             }
         }
-        get{
-            return pickerOptions.ppm
+        get {
+            pickerOptions.ppm
         }
     }
-    
+
     /// freq. per second
     public var fps: CGFloat? {
-        set(v){
-            if let v = v{
+        set(v) {
+            if let v = v {
                 pickerOptions.fps = v
-            }else{
+            } else {
                 pickerOptions.fps = pickerOptions.defFps
             }
         }
-        get{
-            return pickerOptions.fps
+        get {
+            pickerOptions.fps
         }
     }
-    
+
     /// detect area for scroll (extend from top and bottom)
     public var detectAreaHeight: CGFloat? {
-        set(v){
-            if let v = v{
+        set(v) {
+            if let v = v {
                 pickerOptions.detectAreaHeight = v
-            }else{
+            } else {
                 pickerOptions.detectAreaHeight = pickerOptions.defDetectAreaHeight
             }
         }
-        get{
-            return pickerOptions.detectAreaHeight
+        get {
+            pickerOptions.detectAreaHeight
         }
     }
-    
+
     /* data*/
-    var selectedAsset: [PHAsset]{
-        get{
-            return picker.getSelectedAssets()
-        }
+    var selectedAsset: [PHAsset] {
+        picker.getSelectedAssets()
     }
-    
+
     /* initialize*/
-    public init(){
+    public init() {
         super.init(nibName: nil, bundle: nil)
         viewControllers.append(picker)
         picker.imagePickerStyle = pickerStyle
         picker.imagePicker = self
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
-internal struct FLImagePickerOptions{
+internal struct FLImagePickerOptions {
     var numsOfRow: CGFloat = 3 // cells of row
     var maxPick = 100
     var ppm: CGFloat = 3 // (pps, pixel per step)
     var fps: CGFloat = 120 // update speed
     var detectAreaHeight: CGFloat = 200
-    
+
     // default
     let defNumOfRow = CGFloat(3)
     let defMaxPick = 100
@@ -168,4 +167,3 @@ internal struct FLImagePickerOptions{
     let defFps = CGFloat(120)
     let defDetectAreaHeight = CGFloat(200)
 }
-

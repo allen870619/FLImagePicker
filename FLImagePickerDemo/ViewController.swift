@@ -5,42 +5,41 @@
 //  Created by Lee Yen Lin on 2021/12/24.
 //
 
-import UIKit
 import FLImagePicker
 import Photos
+import UIKit
 
 class ViewController: UIViewController, FLImagePickerDelegate {
     // delegate
-    func flImagePicker(didCancelled picker: FLImagePicker) {
+    func flImagePicker(didCancelled _: FLImagePicker) {
         print("cancel")
     }
-    
-    func flImagePicker(_ picker: FLImagePicker, didFinished imageAssets: [PHAsset]) {
+
+    func flImagePicker(_: FLImagePicker, didFinished imageAssets: [PHAsset]) {
         let start = Date().timeIntervalSinceReferenceDate
         var count = 0
         for asset in imageAssets {
-            
-            PHImageManager().requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFit, options: nil){ image, _ in
-                                print(image)
+            PHImageManager().requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFit, options: nil) { image, _ in
+                print(image)
                 count += 1
-                if count == 6{
+                if count == 6 {
                     let delta = Date().timeIntervalSinceReferenceDate - start
                     print(delta)
                 }
             }
         }
-        
+
         //        print(imageAssets)
     }
-    
-    func flImagePicker(_ picker: FLImagePicker, singleAssetChanged imageAsset: PHAsset, isSelected: Bool) {
+
+    func flImagePicker(_: FLImagePicker, singleAssetChanged imageAsset: PHAsset, isSelected: Bool) {
         print("\(#function) \(imageAsset) \(isSelected)")
     }
-    
-    func flImagePicker(_ picker: FLImagePicker, multiAssetsChanged imageAssets: [PHAsset], isSelected: Bool) {
+
+    func flImagePicker(_: FLImagePicker, multiAssetsChanged imageAssets: [PHAsset], isSelected: Bool) {
         print("\(#function) \(imageAssets.count) \(isSelected)")
     }
-    
+
     // demo
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,11 +50,11 @@ class ViewController: UIViewController, FLImagePickerDelegate {
         btn.center = view.center
         view.addSubview(btn)
     }
-    
-    @objc func btnPressed(_ sender: Any){
+
+    @objc func btnPressed(_: Any) {
         let vc = FLImagePicker()
         vc.imageDelegate = self
-        
+
         //  style
         //        var style = FLImagePickerStyle()
         //        style.checkImage = UIImage(named: "test")
@@ -64,7 +63,7 @@ class ViewController: UIViewController, FLImagePickerDelegate {
         //        style.btnColor = .green
         //        style.coverColor = .green
         //        vc.style = style
-        
+
         //
         //        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(3)){
         //            style.checkImage = .FLDefaults.checkImg
@@ -74,13 +73,13 @@ class ViewController: UIViewController, FLImagePickerDelegate {
         //            style.coverColor = .FLDefaults.coverBackground
         //            vc.style = style
         //        }
-        
+
         // optional settings
         //        vc.maxPick = 10
         //        vc.fps = 120
         //        vc.detectAreaHeight = 200
         //        vc.numsOfRow = 3
         //        vc.ppm = 3
-        self.present(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 }

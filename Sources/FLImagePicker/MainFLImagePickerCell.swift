@@ -26,57 +26,98 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import UIKit
 import Photos
+import PureLayout
+import UIKit
 
 class MainFLImagePickerCell: UICollectionViewCell {
-    @IBOutlet private weak var cover: UIView!
-    @IBOutlet private weak var photoImageView: UIImageView!
-    @IBOutlet private weak var checkHinter: UIView!
-    @IBOutlet private weak var imgChecked: UIImageView!
-    
+    private let imageResSize: CGFloat = 400
+    private let checkHinterHeight: CGFloat = 20
+
+    private lazy var cover = UIView(forAutoLayout: ())
+    private lazy var photoImageView = UIImageView(forAutoLayout: ())
+    private lazy var checkHinter = UIView(forAutoLayout: ())
+    private lazy var imgChecked = UIImageView(forAutoLayout: ())
+
+    override init(frame _: CGRect) {
+        super.init(frame: .zero)
+        setupLayout()
+        initCustomView()
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupLayout() {
+        [photoImageView, cover, checkHinter].forEach { contentView.addSubview($0) }
+        [imgChecked].forEach { checkHinter.addSubview($0) }
+
+        cover.autoPinEdgesToSuperviewEdges()
+        photoImageView.autoPinEdgesToSuperviewEdges()
+        checkHinter.autoPinEdge(toSuperviewEdge: .trailing, withInset: 8)
+        checkHinter.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        checkHinter.autoSetDimension(.width, toSize: checkHinterHeight)
+        checkHinter.autoConstrainAttribute(.width, to: .height, of: checkHinter)
+
+        imgChecked.autoPinEdgesToSuperviewEdges(with: .init(top: 4, left: 4, bottom: 4, right: 4))
+    }
+
+    private func initCustomView() {
+        checkHinter.layer.cornerRadius = checkHinterHeight / 2
+        checkHinter.layer.borderWidth = 2
+        checkHinter.backgroundColor = .systemBackground
+    }
+
     /* checked border*/
-    var checkBackgroundColor: UIColor?{
-        willSet{
+    var checkBackgroundColor: UIColor? {
+        willSet {
             checkHinter.backgroundColor = isSelected ? newValue : .clear
         }
     }
-    
-    var checkBorderColor: UIColor?{
-        willSet{
+
+    var checkBorderColor: UIColor? {
+        willSet {
             checkHinter.layer.borderColor = newValue?.cgColor
         }
     }
-    
-    var checkImage: UIImage?{
-        willSet{
+
+    var checkImage: UIImage? {
+        willSet {
             imgChecked.image = newValue
         }
     }
-    
-    var coverColor: UIColor?{
-        willSet{
+
+    var coverColor: UIColor? {
+        willSet {
             cover.backgroundColor = newValue
         }
     }
-    
+
     /* set photo*/
-    var imgAsset: PHAsset?{
-        didSet{
-            if let imgAsset = imgAsset {
-                PHCachingImageManager().requestImage(for: imgAsset,
-                                                        targetSize: CGSize(width: 400, height: 400),
-                                                        contentMode: .aspectFit,
-                                                        options: .none){[self] (image, info) in
-                    photoImageView.image = image
-                }
+    var imageAsset: PHAsset? {
+        didSet {
+            guard let imageAsset = imageAsset else { return }
+
+            requireImage(from: imageAsset) { [weak self] image, _ in
+                self?.photoImageView.image = image
             }
         }
     }
-    
+
+    private func requireImage(from imageAsset: PHAsset, completion: @escaping (UIImage?, [AnyHashable: Any]?) -> Void) {
+        let desireSize = CGSize(width: imageResSize, height: imageResSize)
+        PHCachingImageManager().requestImage(for: imageAsset,
+                                             targetSize: desireSize,
+                                             contentMode: .aspectFit,
+                                             options: .none,
+                                             resultHandler: completion)
+    }
+
     /* selected*/
-    override var isSelected: Bool{
-        didSet{
+    override var isSelected: Bool {
+        didSet {
             cover.isHidden = !isSelected
             imgChecked.isHidden = !isSelected
             checkHinter.backgroundColor = isSelected ? checkBackgroundColor : .clear
