@@ -53,7 +53,7 @@ class ViewController: UIViewController, FLImagePickerDelegate {
 
     @objc func btnPressed(_: Any) {
         let vc = FLImagePicker()
-        vc.imageDelegate = self
+//        vc.imageDelegate = self
 
         //  style
         //        var style = FLImagePickerStyle()
